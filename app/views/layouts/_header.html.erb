@@ -1,0 +1,24 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <nav>
+    <!-- insert logo here -->
+     <ul class="nav navbar-nav navbar-left">
+      
+      <!-- Header for when the user is logged in -->
+      
+      <li role="presentation"> <%= link_to "Home", root_path=%> </li>
+      <li role="presentation"><%= link_to "Profile", '#'=%></li>
+      <li role="presentation"><%= link_to "My Files", '#'=%></li>
+      <li role="presentation"><%= link_to "Shared Files", '#'=%></li>
+    
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      
+      <!-- Header when NOT logged in -->
+      <li role="presentation"> <%= link_to "Home", root_path=%> </li>
+      <li role="presentation"><%= link_to "Help", '#'=%></li>
+      <li role="presentation"><%= link_to "Log In", '#'=%></li>
+  
+      <!-- Header when not logged in -->
+    </ul>
+  </nav>
+</header>
