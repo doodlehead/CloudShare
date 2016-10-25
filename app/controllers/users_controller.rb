@@ -9,6 +9,21 @@ class UsersController < ApplicationController
   end
 
   def create
-    #@user = User.new(name: params[:name], email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
+    @user = User.new(user_params)
+    #byebug
+    if(@user.save)
+      #insert logic to log in the user
+      
+      redirect_to @user
+    else
+      render 'new'
+    end
   end
+  
+  private
+    def user_params
+      return params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      #require() marks what params are required
+      #permit() limits which parameters can be passed in
+    end
 end
