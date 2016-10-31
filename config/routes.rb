@@ -1,12 +1,19 @@
 Rails.application.routes.draw do
   
+  get 'sessions/new'
+
   root 'static_pages#home'
   get '/signup', to: 'users#new'
   get '/about', to: 'static_pages#about'
   get '/contact', to: 'static_pages#contact'
-  #Generates helper methods such as signup_path
+  
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+  #Session routing
   
    resources :users
+   #Generates helper methods such as signup_path
 =begin
   Declares all common routes for the controller User:
   /users          -> GET, POST
