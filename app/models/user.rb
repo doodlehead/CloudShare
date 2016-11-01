@@ -10,6 +10,7 @@ class User < ApplicationRecord
     
     #Adds password functinality(BCrypt gem)
     has_secure_password
+    #Does a bunch of stuff behind the scenes, refer to: http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
     validates :password, length: { minimum: 6}, presence: true
     
     #Password digest method
