@@ -4,6 +4,7 @@
         Also submits a POST request to current page?-->
 
 <%= form_for(@user) do |f| %>
+    <%= render 'shared/error_messages' %>
     
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>

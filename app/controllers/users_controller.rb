@@ -31,8 +31,8 @@ class UsersController < ApplicationController
      @user = User.find(params[:id])
      
      if( @user.update_attributes(user_params))
+       flash[:success] = "Sucessfully updated account information"
        #handle update...
-       #Show flash for successful update
        redirect_to @user
      else
        render "edit"
