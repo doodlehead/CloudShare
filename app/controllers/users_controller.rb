@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  #Calls the logged_in_user method before the following actions
+  before_action :logged_in_user, only: [:edit, :update]
   
   def new
     #Create empty user
@@ -20,10 +22,33 @@ class UsersController < ApplicationController
     end
   end
   
+  def edit
+    #Relocate the user
+    @user = User.find(params[:id])
+  end
+  
+  def update
+     @user = User.find(params[:id])
+     
+     if( @user.update_attributes(user_params))
+       #handle update...
+       #Show flash for successful update
+       redirect_to @user
+     else
+       render "edit"
+     end
+  end
+  
   private
     def user_params
       return params.require(:user).permit(:name, :email, :password, :password_confirmation)
       #require() marks what params are required
       #permit() limits which parameters can be passed in
+    end
+    
+    def logged_in_user
+      unless logged_in?
+        redirect_to root_url
+      end
     end
 end

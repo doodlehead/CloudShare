@@ -11,8 +11,7 @@ class SessionsController < ApplicationController
       log_in(user) #store id in cache
       redirect_to user_url(user)
     else
-      #insert code to show errors(Flash)
-      
+      flash.now[:danger] = "Invalid username or password"
       #refresh the page
       render 'new'
     end
