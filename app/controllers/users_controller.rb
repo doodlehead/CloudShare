@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   #Calls the logged_in_user method before the following actions
   before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user,   only: [:edit, :update]
   
   def new
     #Create empty user
@@ -16,6 +17,7 @@ class UsersController < ApplicationController
     #byebug
     if(@user.save)
       log_in(@user)
+      flash[:success] = "Welcome to CloudShare!"
       redirect_to @user
     else
       render 'new'
@@ -48,6 +50,15 @@ class UsersController < ApplicationController
     
     def logged_in_user
       unless logged_in?
+        flash[:warning] = "Please log in"
+        redirect_to root_url
+      end
+    end
+    
+    def correct_user
+      @user = User.find(params[:id])
+      if( !(@user == current_user))
+        flash[:danger] = "You don't have permission to access this page"
         redirect_to root_url
       end
     end
