@@ -6,14 +6,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    #add code to show users
+    @user = User.find(params[:id])
   end
 
   def create
     @user = User.new(user_params)
     #byebug
     if(@user.save)
-      log_in(@user)
+      log_in(@user) 
       redirect_to @user
     else
       render 'new'
