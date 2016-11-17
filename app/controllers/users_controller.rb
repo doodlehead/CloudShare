@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   end
   
   def show
-    #add code to show users
+    @user = User.find(params[:id])
   end
 
   def create
