@@ -11,8 +11,7 @@ class SessionsController < ApplicationController
       log_in(user) #store id in cache
       redirect_to user_url(user)
     else
-      #insert code to show errors(Flash)
-      
+      flash.now[:danger] = "Invalid username or password"
       #refresh the page
       render 'new'
     end
@@ -20,6 +19,7 @@ class SessionsController < ApplicationController
   
   def destroy
     log_out if logged_in?
+    flash[:success] = "Successfully logged out" if !logged_in?
     redirect_to root_url
   end
   
