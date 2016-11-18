@@ -47,9 +47,15 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
-    redirect_to users_url
+    target = User.find(params[:id])
+    if(target.admin?)
+      flash[:danger] = "Cannot delete admin account"
+      redirect_to user_path(target)
+    else
+      target.destroy
+      flash[:success] = "User deleted"
+      redirect_to users_url
+    end
   end
   
   private
@@ -68,6 +74,11 @@ class UsersController < ApplicationController
     
     def correct_user
       @user = User.find(params[:id])
+      #UNLIMITED POWER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      if(current_user.admin?)
+        return true
+      end
+      
       if( !(@user == current_user))
         flash[:danger] = "You don't have permission to access this page"
         redirect_to root_url

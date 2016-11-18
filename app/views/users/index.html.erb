@@ -1,7 +1,8 @@
 <h1>All Users</h1>
 <div class="alert alert-info" role="alert">This page is a work in progress!</div>
-<ul class="list-group">
+
+<div class="list-group">
     <% @users.each do |user| %>
-        <li class="list-group-item"> <%= user.name %> </li>
+        <a href= <%= user_path(user) =%> class="list-group-item"> <%= user.name %> </a>
     <% end %>
-</ul>
+</div>
