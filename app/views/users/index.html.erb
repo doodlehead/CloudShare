@@ -1,8 +1,15 @@
 <h1>All Users</h1>
-<div class="alert alert-info" role="alert">This page is a work in progress!</div>
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  This page is a work in progress!
+</div>
 
 <div class="list-group">
     <% @users.each do |user| %>
-        <a href= <%= user_path(user) =%> class="list-group-item"> <%= user.name %> </a>
+        <% if(user.admin? )%>
+            <a href= <%= user_path(user) =%> class="list-group-item"> <%= user.name %> &nbsp; <span class="label label-primary">Admin</span> </a>
+        <% else %>
+            <a href= <%= user_path(user) =%> class="list-group-item"> <%= user.name %> </a>
+        <% end %>
     <% end %>
 </div>

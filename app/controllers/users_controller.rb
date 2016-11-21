@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find(params[:id])
+     @user = User.find_by(id: params[:id])
   end
 
   def create
@@ -25,6 +25,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to CloudShare!"
       redirect_to @user
     else
+      #flash.now[:danger] = "Error. Could not create user!"
       render 'new'
     end
   end
@@ -73,7 +74,12 @@ class UsersController < ApplicationController
     end
     
     def correct_user
-      @user = User.find(params[:id])
+      @user = User.find_by(id: params[:id])
+      if(@user.nil?)
+        flash[:danger] = "Error. User does not exist"
+        redirect_to users_url
+      end
+      
       #UNLIMITED POWER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       if(current_user.admin?)
         return true
