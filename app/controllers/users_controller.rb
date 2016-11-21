@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   #Calls the logged_in_user method before the following actions
-  before_action :logged_in_user, only: [:edit, :update, :index]
-  before_action :correct_user,   only: [:edit, :update]
+  before_action :logged_in_user, only: [:edit, :update, :index, :destroy, :show]
+  before_action :correct_user,   only: [:edit, :update, :show]
+  before_action :admin_user,     only: :destroy
   
   def new
     #Create empty user
@@ -45,6 +46,18 @@ class UsersController < ApplicationController
      end
   end
   
+  def destroy
+    target = User.find(params[:id])
+    if(target.admin?)
+      flash[:danger] = "Cannot delete admin account"
+      redirect_to user_path(target)
+    else
+      target.destroy
+      flash[:success] = "User deleted"
+      redirect_to users_url
+    end
+  end
+  
   private
     def user_params
       return params.require(:user).permit(:name, :email, :password, :password_confirmation)
@@ -61,8 +74,19 @@ class UsersController < ApplicationController
     
     def correct_user
       @user = User.find(params[:id])
+      #UNLIMITED POWER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      if(current_user.admin?)
+        return true
+      end
+      
       if( !(@user == current_user))
         flash[:danger] = "You don't have permission to access this page"
+        redirect_to root_url
+      end
+    end
+    
+    def admin_user
+      if(!current_user.admin?)
         redirect_to root_url
       end
     end
