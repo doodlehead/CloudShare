@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    #byebug0
-    #@session = Session.new
+    
   end
   
   def create
