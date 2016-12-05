@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :assets
   get 'sessions/new'
 
   root 'static_pages#home'
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   #Session routing
   
    resources :users
+   resources :assets
    #Generates helper methods such as signup_path
 =begin
   Declares all common routes for the controller User:

@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Assets</h1>
+
+<p>
+  <% @assets.each do |asset|%>
+    <%= asset.uploaded_file_file_name%>
+  <%end%>
+</p>
+
+<%= link_to 'New Asset', new_asset_path %>

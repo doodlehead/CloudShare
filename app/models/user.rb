@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :assets
     #Force all emails to be lowercase
     before_save { self.email = email.downcase }
     
