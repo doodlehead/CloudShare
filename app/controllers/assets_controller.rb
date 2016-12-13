@@ -4,17 +4,18 @@ class AssetsController < ApplicationController
   # GET /assets
   # GET /assets.json
   def index
-    @assets = Asset.all
+    @assets = current_user.assets.all
   end
 
   # GET /assets/1
   # GET /assets/1.json
   def show
+    @asset = current_user.assets.find(params[:id]) 
   end
 
   # GET /assets/new
   def new
-    @asset = Asset.new
+    @asset = current_user.assets.new
   end
 
   # GET /assets/1/edit
@@ -24,8 +25,10 @@ class AssetsController < ApplicationController
   # POST /assets
   # POST /assets.json
   def create
-    @asset = Asset.new(asset_params)
-
+    @asset = current_user.assets.new(asset_params)
+    
+    #byebug
+    
     respond_to do |format|
       if @asset.save
         format.html { redirect_to @asset, notice: 'Asset was successfully created.' }
