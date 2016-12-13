@@ -48,6 +48,7 @@ module SessionsHelper
     
     def admin_user
       if(!current_user.admin?)
+        flash[:danger] = "Access Denied. Admin required"
         redirect_to root_url
       end
     end
