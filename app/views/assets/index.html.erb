@@ -17,6 +17,7 @@
         <td><%= link_to 'Show', asset %></td>
         <td><%= link_to 'Edit', edit_asset_path(asset) %></td>
         <td><%= link_to 'Destroy', asset, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Download", asset.asset.url(:original, false) %></td>
       </tr>
     <% end %>
   </tbody>
