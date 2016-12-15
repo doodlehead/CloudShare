@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Assets</h1>
+<h1>Files</h1>
 
 <table class="table table-striped">
   <thead>
@@ -21,7 +21,7 @@
         <td>
           <%= link_to 'Show', asset %>
           <%= link_to 'Edit', edit_asset_path(asset) %>
-          <%= link_to 'Destroy', asset, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Delete', asset, method: :delete, data: { confirm: 'Are you sure?' } %>
           <%= link_to "Download", asset.asset.url(:original, false) %>
         </td>
       </tr>

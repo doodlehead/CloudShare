@@ -5,5 +5,5 @@ class Asset < ApplicationRecord
     has_attached_file :asset
     validates_attachment_presence :asset
     do_not_validate_attachment_file_type :asset
-    #validates_attachment :asset, size: { in: 0..10.megabytes }
+    validates_with AttachmentSizeValidator, attributes: :asset, less_than: 5.megabytes
 end

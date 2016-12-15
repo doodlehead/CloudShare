@@ -2,6 +2,7 @@ class AssetsController < ApplicationController
   before_action :set_asset, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:index, :show, :new, :create,:update, :destroy]
   before_action :admin_user, only: [:update, :edit]
+  before_action :has_storage, only: [:create]
   # GET /assets
   # GET /assets.json
   def index
@@ -12,6 +13,8 @@ class AssetsController < ApplicationController
   # GET /assets/1.json
   def show
     @asset = current_user.assets.find(params[:id]) 
+    
+    
   end
 
   # GET /assets/new
@@ -76,4 +79,13 @@ class AssetsController < ApplicationController
       #byebug
       params.require(:asset).permit(:user_id, :asset)
     end
+    
+    def has_storage
+      #10 MB
+      if(calculate_storage > (1024*1024*5))
+        flash[:danger] = "You are over the storage limit! Please delete some files to upload more."
+        redirect_to assets_url
+      end
+    end
+    
 end

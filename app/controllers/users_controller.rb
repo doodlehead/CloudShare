@@ -53,6 +53,13 @@ class UsersController < ApplicationController
       flash[:danger] = "Cannot delete admin account"
       redirect_to user_path(target)
     else
+      @asset = target.assets.all
+      
+      #Delete all of the user's files
+      @asset.each do |asset|
+        asset.destroy
+      end
+      
       target.destroy
       flash[:success] = "User deleted"
       redirect_to users_url
