@@ -82,7 +82,7 @@ class AssetsController < ApplicationController
     
     def has_storage
       #10 MB
-      if(calculate_storage > (1024*1024*5))
+      if(calculate_storage(current_user) > (1024*1024*5))
         flash[:danger] = "You are over the storage limit! Please delete some files to upload more."
         redirect_to assets_url
       end
