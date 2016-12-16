@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to CloudShare!"
       redirect_to @user
     else
-      #flash.now[:danger] = "Error. Could not create user!"
+      flash.now[:danger] = "Error. Could not create user!"
       render 'new'
     end
   end
