@@ -5,14 +5,16 @@
       <ul class="nav navbar-nav navbar-right">
         
         <li> <%= link_to "Home", root_path=%> </li>
-        <li><%= link_to "My Files", '#'=%></li>
+        <li><%= link_to "My Files", assets_path=%></li>
         <li><%= link_to "Shared Files", '#'=%></li>
         
         <% if logged_in? %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Users", users_path %></li>
+              <% if(current_user.admin?) %>
+                <li><%= link_to "Users", users_path %></li>
+              <% end %>
               <li><%= link_to "Profile", current_user %></li>
               <li><%= link_to "Settings", edit_user_path(current_user) %></li>
               <li role="separator" class="divider"></li>

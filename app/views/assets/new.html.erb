@@ -1,0 +1,30 @@
+<h1>Upload new file</h1>
+
+<!-- Should be in partial? -->
+<% if( @asset.errors.any?) %>
+ <div id="error_explanation">
+      <div class="alert alert-danger">
+         This form contains errors!
+         <% @asset.errors.full_messages.each do |msg| %>
+          <li><%= msg =%></li>
+         <% end %>
+      </div>
+    </div>
+<% end %>
+
+<% if(true) %>
+
+<%= form_for(@asset, multipart: true) do |f| %>
+  <div class="field">
+    <%= f.label :asset %>
+    <%= f.file_field :asset %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Submit' %>
+    <%= link_to 'Link?', '#', class: 'button' %>
+  </div>
+<% end %>
+<% end %>
+
+
+<%= link_to 'Back', assets_path %>

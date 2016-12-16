@@ -5,7 +5,7 @@
 <ul class="list-group">
     <li class="list-group-item"><strong>Email:</strong> <%=@user.email%></li>
     <li class="list-group-item"><strong>Name:</strong> <%=@user.name%></li>
-    <li class="list-group-item"><strong>Storage:</strong> 0/50 MB</li>
+    <li class="list-group-item"><strong>Storage:</strong> <%= calculate_storage(params[:id])/(1024) %>/5 000 KB</li>
 </ul>
 
 <% if(current_user.admin?) %>

@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find(params[:id])
+     @user = User.find_by(id: params[:id])
   end
 
   def create
@@ -25,6 +25,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to CloudShare!"
       redirect_to @user
     else
+      flash.now[:danger] = "Error. Could not create user!"
       render 'new'
     end
   end
@@ -52,6 +53,13 @@ class UsersController < ApplicationController
       flash[:danger] = "Cannot delete admin account"
       redirect_to user_path(target)
     else
+      @asset = target.assets.all
+      
+      #Delete all of the user's files
+      @asset.each do |asset|
+        asset.destroy
+      end
+      
       target.destroy
       flash[:success] = "User deleted"
       redirect_to users_url
@@ -65,29 +73,4 @@ class UsersController < ApplicationController
       #permit() limits which parameters can be passed in
     end
     
-    def logged_in_user
-      unless logged_in?
-        flash[:warning] = "Please log in"
-        redirect_to root_url
-      end
-    end
-    
-    def correct_user
-      @user = User.find(params[:id])
-      #UNLIMITED POWER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      if(current_user.admin?)
-        return true
-      end
-      
-      if( !(@user == current_user))
-        flash[:danger] = "You don't have permission to access this page"
-        redirect_to root_url
-      end
-    end
-    
-    def admin_user
-      if(!current_user.admin?)
-        redirect_to root_url
-      end
-    end
 end
