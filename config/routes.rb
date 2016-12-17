@@ -12,9 +12,12 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  
+  get 'assets/get/:id', to: 'assets#get'
   #Session routing
   
    resources :users
+   
    #Generates helper methods such as signup_path
 =begin
   Declares all common routes for the controller User:

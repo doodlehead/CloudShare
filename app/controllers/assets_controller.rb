@@ -16,7 +16,15 @@ class AssetsController < ApplicationController
     
     
   end
-
+  
+  def get
+    @asset = current_user.assets.find(params[:id])
+    
+    send_file @asset.asset.path,
+      :filename => @asset.asset.original_filename,
+      :type => @asset.asset.content_type,
+      :disposition => 'attachment'
+  end
   # GET /assets/new
   def new
     @asset = current_user.assets.new
