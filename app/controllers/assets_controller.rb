@@ -1,6 +1,6 @@
 class AssetsController < ApplicationController
-  before_action :set_asset, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:index, :show, :new, :create,:update, :destroy]
+  before_action :logged_in_user, only: [:set_asset, :index, :get, :show, :new, :create,:update, :destroy]
+  before_action :set_asset, only: [:show, :get, :edit, :update, :destroy]
   before_action :admin_user, only: [:update, :edit]
   before_action :has_storage, only: [:create]
   # GET /assets
@@ -12,14 +12,10 @@ class AssetsController < ApplicationController
   # GET /assets/1
   # GET /assets/1.json
   def show
-    @asset = current_user.assets.find(params[:id]) 
-    
     
   end
   
   def get
-    @asset = current_user.assets.find(params[:id])
-    
     send_file @asset.asset.path,
       :filename => @asset.asset.original_filename,
       :type => @asset.asset.content_type,
@@ -79,7 +75,11 @@ class AssetsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_asset
-      @asset = Asset.find(params[:id])
+      @asset = current_user.assets.find_by(id: params[:id])
+      if(@asset == nil)
+        flash[:danger] = "File does not exist!"
+        redirect_to assets_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
