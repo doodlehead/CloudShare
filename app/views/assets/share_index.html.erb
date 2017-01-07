@@ -1,0 +1,24 @@
+
+
+<h1> Share Index </h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Shared With</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% id = @asset.id %>
+    <% @shared_to.each do |sId| %>
+      <tr>
+        <td><%= sId %></td>
+        <td>
+          <%= link_to 'Unshare', unshare_asset_path(id, sId), method: :delete, data: { confirm: 'Are you sure?' } %>
+       </td>
+      </tr>
+    <% end %>
+  </tbody>
+
+

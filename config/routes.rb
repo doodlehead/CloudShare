@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
   
-  resources :assets
+  resources :assets do
+    member do
+      get 'sharing'
+      post 'share'
+      get 'share_index' 
+      #share_index displays the users that a file has been shared too
+    end
+    collection do
+      get 'shared_files'
+    end
+  end
+  
   get 'sessions/new'
 
   root 'static_pages#home'
@@ -14,6 +25,9 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
   get 'assets/get/:id', to: 'assets#get'
+  delete '/assets/:id/unshare/:sId', to: 'assets#unshare', as: :unshare_asset
+
+  #sharing renders the form, share takes the post request
   #Session routing
   
    resources :users

@@ -6,7 +6,7 @@
         
         <li> <%= link_to "Home", root_path=%> </li>
         <li><%= link_to "My Files", assets_path=%></li>
-        <li><%= link_to "Shared Files", '#'=%></li>
+        <li><%= link_to "Shared Files", shared_files_assets_path=%></li>
         
         <% if logged_in? %>
           <li class="dropdown">

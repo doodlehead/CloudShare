@@ -1,5 +1,4 @@
 class Asset < ApplicationRecord
-    #attr_accessible :user_id, :uploaded_file
     belongs_to :user
     
     has_attached_file :asset,

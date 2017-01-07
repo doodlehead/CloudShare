@@ -2,6 +2,8 @@ class AddAttachmentUploadedFileToAssets < ActiveRecord::Migration
   def self.up
     change_table :assets do |t|
       t.attachment :uploaded_file
+      add_index :assets, :user_id
+
     end
   end
 
