@@ -63,7 +63,6 @@ class AssetsController < ApplicationController
     the_asset.update_attribute(:shared_with, asset_update)    
   end
   
-  #Crashes if no shared files are present
   #Later, make shared_files check to see if the asset lists the user, for added security
   def shared_files
     if current_user.shared_files
