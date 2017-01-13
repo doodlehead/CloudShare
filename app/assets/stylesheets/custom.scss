@@ -1,11 +1,19 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
 /* General */
 body {
     padding-top: 60px;
     padding-left: 30px;
     padding-right: 30px;
+    
+    a {
+        color: #555;
+        &:hover {
+            color: #555;
+        }
+    }
 }
 
 h1{
@@ -15,6 +23,14 @@ h1{
 p {
     
 }
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
 /* navbar */
 .nav {
     padding-right: 40px;

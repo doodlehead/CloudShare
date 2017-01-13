@@ -5,9 +5,9 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>User</th>
       <th>File Name</th>
       <th>File Size</th>
+      <th>Date Uploaded</th>
       <th colspan="3">Actions</th>
     </tr>
   </thead>
@@ -15,9 +15,9 @@
   <tbody>
     <% @assets.each do |asset| %>
       <tr>
-        <td><%= asset.user_id %></td>
         <td><%= asset.asset.original_filename %></td>
         <td><%= asset.asset.size/1024%> KB</td>
+        <td>01/01/1999</td>
         <td>
           <%= link_to 'Show', asset %>
           <% if(current_user.admin?) %>
@@ -35,4 +35,4 @@
 
 <br>
 
-<%= link_to 'New Asset', new_asset_path %>
+<a class="btn btn-primary btn-lg" href=<%=new_asset_path%> role="button">Upload File</a>

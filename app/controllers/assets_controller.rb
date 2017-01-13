@@ -1,10 +1,12 @@
 class AssetsController < ApplicationController
+  #Calls the "before_action" method before the following actions
   before_action :logged_in_user, only: [:set_asset, :index, :edit, :get, :show, :new, :create,:update, :destroy, :sharing, :share_index, :share, :unshare, :shared_files]
   before_action :set_asset, only: [:show, :get, :edit, :update, :destroy]
   before_action :admin_user, only: [:update, :edit]
   before_action :has_storage, only: [:create]
   # GET /assets
   # GET /assets.json
+  #Shows the index view, which displays all the assets the user owns
   def index
     @assets = current_user.assets.all
   end
@@ -22,7 +24,6 @@ class AssetsController < ApplicationController
     str = @asset.shared_with.to_s
     @shared_to = str.split(",")
   end
-  
   def share
     @asset = Asset.find(params[:id])
     other_user_id = User.find_by(share_params).id
@@ -71,7 +72,7 @@ class AssetsController < ApplicationController
       puts @assets.length
     end
   end
-  
+  #Sends a request to the browser to download an asset
   def get
     send_file @asset.asset.path,
       :filename => @asset.asset.original_filename,
@@ -89,18 +90,22 @@ class AssetsController < ApplicationController
 
   # POST /assets
   # POST /assets.json
+  #Creates and attemps to save an Asset
   def create
     @asset = current_user.assets.new(asset_params)
     
+    #Check if the current user has enough storage to upload the asset
     if(@asset.asset.size + calculate_storage(current_user) > (1024*1024*5))
       flash[:danger] = "You do not have enough storage to upload this file! Please delete some files to free up space."
       redirect_to assets_path
     else
       respond_to do |format|
+        #Check if the file saves sucessfully
         if @asset.save
           format.html { redirect_to @asset, notice: 'Asset was successfully created.' }
           format.json { render :show, status: :created, location: @asset }
         else
+          #Show error message if the save fails
           format.html { render :new }
           format.json { render json: @asset.errors, status: :unprocessable_entity }
         end
@@ -110,6 +115,7 @@ class AssetsController < ApplicationController
 
   # PATCH/PUT /assets/1
   # PATCH/PUT /assets/1.json
+  #This shouldn't really exist... Just a scaffold method FIXME
   def update
     respond_to do |format|
       if @asset.update(asset_params)
@@ -124,6 +130,7 @@ class AssetsController < ApplicationController
 
   # DELETE /assets/1
   # DELETE /assets/1.json
+  #Deletes the file from the database
   def destroy
     @asset.destroy
     respond_to do |format|
