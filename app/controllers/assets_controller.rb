@@ -26,34 +26,39 @@ class AssetsController < ApplicationController
   end
   def share
     @asset = Asset.find(params[:id])
-    other_user_id = User.find_by(share_params).id
-    #remember to catch error
-    shared_user = User.find_by(id: other_user_id)
-    #For some reason, @asset.update_attribute was not working, but with a local variable, it does
-    the_asset = @asset
-    
-    if shareable?(other_user_id)
-      asset_update = ""
-      user_update = ""
-      
-      if @asset.shared_with == nil 
-        asset_update = other_user_id.to_s << ","
-      else
-        asset_update = @asset.shared_with.to_s << other_user_id.to_s << ","
-      end
-      
-      if shared_user.shared_files == nil
-        user_update = @asset.id.to_s << ","
-      else
-        user_update = shared_user.shared_files << @asset.id.to_s << ","
-      end
-    
-      shared_user.update_attribute(:shared_files, user_update)
-      the_asset.update_attribute(:shared_with, asset_update)
-      redirect_to assets_path
+    if(User.find_by(share_params) == nil)
+      flash[:danger] = "User doesn't exist"
+      redirect_to sharing_asset_path
     else
-      flash[:danger] = "Could not share with the user"
-      redirect_to assets_path
+      other_user_id = User.find_by(share_params).id
+      #remember to catch error
+      shared_user = User.find_by(id: other_user_id)
+      #For some reason, @asset.update_attribute was not working, but with a local variable, it does
+      the_asset = @asset
+      
+      if shareable?(other_user_id)
+        asset_update = ""
+        user_update = ""
+        
+        if @asset.shared_with == nil 
+          asset_update = other_user_id.to_s << ","
+        else
+          asset_update = @asset.shared_with.to_s << other_user_id.to_s << ","
+        end
+        
+        if shared_user.shared_files == nil
+          user_update = @asset.id.to_s << ","
+        else
+          user_update = shared_user.shared_files << @asset.id.to_s << ","
+        end
+      
+        shared_user.update_attribute(:shared_files, user_update)
+        the_asset.update_attribute(:shared_with, asset_update)
+        redirect_to assets_path
+      else
+        flash[:danger] = "Could not share with the user"
+        redirect_to assets_path
+      end
     end
   end
   
@@ -67,6 +72,7 @@ class AssetsController < ApplicationController
     shared_user.update_attribute(:shared_files, user_update)
     the_asset.update_attribute(:shared_with, asset_update)
     
+    flash[:warning] = "File unshared"
     redirect_to share_index_asset_path
   end
   
