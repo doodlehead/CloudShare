@@ -134,10 +134,8 @@ class AssetsController < ApplicationController
   #Deletes the file from the database
   def destroy
     @asset.destroy
-    respond_to do |format|
-      format.html { redirect_to assets_url, notice: 'Asset was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:success] = "Successfully deleted file"
+    redirect_to assets_path
   end
 
   private
