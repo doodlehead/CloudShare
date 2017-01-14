@@ -65,7 +65,9 @@ class AssetsController < ApplicationController
     asset_update = the_asset.shared_with.split(",").delete(:sId)
     
     shared_user.update_attribute(:shared_files, user_update)
-    the_asset.update_attribute(:shared_with, asset_update)    
+    the_asset.update_attribute(:shared_with, asset_update)
+    
+    redirect_to share_index_asset_path
   end
   
   #Later, make shared_files check to see if the asset lists the user, for added security
