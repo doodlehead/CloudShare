@@ -50,7 +50,11 @@ class AssetsController < ApplicationController
     
       shared_user.update_attribute(:shared_files, user_update)
       the_asset.update_attribute(:shared_with, asset_update)
-    end    
+      redirect_to assets_path
+    else
+      flash[:danger] = "Could not share with the user"
+      redirect_to assets_path
+    end
   end
   
   def unshare
@@ -100,16 +104,14 @@ class AssetsController < ApplicationController
       flash[:danger] = "You do not have enough storage to upload this file! Please delete some files to free up space."
       redirect_to assets_path
     else
-      respond_to do |format|
-        #Check if the file saves sucessfully
-        if @asset.save
-          format.html { redirect_to @asset, notice: 'Asset was successfully created.' }
-          format.json { render :show, status: :created, location: @asset }
-        else
-          #Show error message if the save fails
-          format.html { render :new }
-          format.json { render json: @asset.errors, status: :unprocessable_entity }
-        end
+      #Check if the file saves sucessfully
+      if @asset.save
+        flash[:success] = 'File was successfully uploaded'
+        redirect_to assets_path
+      else
+        #Show error message if the save fails
+        flash[:danger] = 'Error! File could not be uploaded'
+        redirect_to assets_path
       end
     end
   end

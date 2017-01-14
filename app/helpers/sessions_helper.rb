@@ -11,23 +11,23 @@ module SessionsHelper
             @current_user #return
         end
     end
-    
+    #Check if user is logged in
     def logged_in?
         !current_user.nil?
     end
-    
+    #Log the user out
     def log_out
         session.delete(:user_id) #remove the user id from the browser cache
         @current_user = nil
     end
-    
+    #Check if user is logged in, if not redirect them to the home page
     def logged_in_user
       unless logged_in?
         flash[:warning] = "Please log in"
         redirect_to root_url
       end
     end
-    
+    #Users can only access thier own profile
     def correct_user
       @user = User.find_by(id: params[:id])
       if(@user.nil?)
@@ -35,7 +35,7 @@ module SessionsHelper
         redirect_to users_url
       end
       
-      #UNLIMITED POWER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      #Admins have access to everything
       if(current_user.admin?)
         return true
       end
@@ -46,6 +46,7 @@ module SessionsHelper
       end
     end
     
+    #Check if user is admin
     def admin_user
       if(!current_user.admin?)
         flash[:danger] = "Access Denied. Admin required"
