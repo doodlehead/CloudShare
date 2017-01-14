@@ -10,20 +10,20 @@
   </thead>
 
   <tbody>
-    <% if @assets != nil %>
-      <% @assets.each do |asset| %>
-        <tr>
-          <td><%= asset.user_id %></td>
-          <td><%= asset.asset.original_filename %></td>
-          <td><%= asset.asset.size/1024%> KB</td>
-          <td>
-            <%= link_to 'Show', asset %>
-            <%= link_to "Download", asset.asset.url(:original, false) %>
-          </td>
-        </tr>
-      <% end %>
-    <% else %>
-      <p> You have no shared files </p>
-    <% end %> 
+    <% @assets.each do |asset| %>
+      <tr>
+        <td><%= asset.user_id %></td>
+        <td><%= asset.asset.original_filename %></td>
+        <td><%= asset.asset.size/1024%> KB</td>
+        <td>
+          <%= link_to 'Show', asset %>
+          <%= link_to "Download", asset.asset.url(:original, false) %>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
+
+<% if @assets.size == 0 %>
+  <p> You have no shared files </p>
+<% end %> 
