@@ -1,20 +1,46 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
 /* General */
+html, body {
+	margin:0;
+	padding:0;
+	height:100%;
+}
 body {
     padding-top: 60px;
     padding-left: 30px;
     padding-right: 30px;
+    //height: 100%;
+    //min-height: 100%;
+    a {
+        color: #555;
+        &:hover {
+            color: #555;
+        }
+    }
 }
 
 h1{
     
 }
 
+.btn {
+  color: #fff !important;
+}
+
 p {
     
 }
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
 /* navbar */
 .nav {
     padding-right: 40px;
@@ -31,8 +57,14 @@ p {
 
 /* footer */
 footer {
-    margin-top: 45px;
-    padding-top: 5px;
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 3em;
+    margin-top: -3em;
+    
+    //margin-top: 45px;
+    //padding-top: 5px;
     border-top: 1px solid #eaeaea;
     color: #777;
     a {
@@ -53,4 +85,22 @@ footer {
             margin-left:15px;
         }
     }
+}
+
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+#header {
+	padding:10px;
+}
+#content {
+	padding-bottom:40; /* Height of the footer element */
+}
+#footer {
+	width:100%;
+	height:40px;
+	position:absolute;
+	bottom:0;
+	left:0;
 }

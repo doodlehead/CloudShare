@@ -1,6 +1,6 @@
 module AssetsHelper
     def format_filesize
-        
+        #to be implemented...
     end
     
     def calculate_storage(user_id)
@@ -27,4 +27,10 @@ module AssetsHelper
       end
       return true
     end
+    
+    def sort_alpha
+      @assets = @assets.sort_by { |h| h[:name] }
+      #redirect_to user_path
+    end
+    
 end
