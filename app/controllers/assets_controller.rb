@@ -79,6 +79,7 @@ class AssetsController < ApplicationController
       :type => @asset.asset.content_type,
       :disposition => 'attachment'
   end
+  
   # GET /assets/new
   def new
     @asset = current_user.assets.new

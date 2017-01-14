@@ -17,9 +17,8 @@
       <tr>
         <td><%= asset.asset.original_filename %></td>
         <td><%= asset.asset.size/1024%> KB</td>
-        <td>01/01/1999</td>
+        <td><%= asset.created_at %></td>
         <td>
-          <%= link_to 'Show', asset %>
           <% if(current_user.admin?) %>
             <%= link_to 'Edit', edit_asset_path(asset) %>
           <% end %>
