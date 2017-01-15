@@ -3,6 +3,7 @@ module AssetsHelper
         #to be implemented...
     end
     
+    #Calcualtes the total amount of storage a user has taken.
     def calculate_storage(user_id)
       storage = 0
       @assets = User.find(user_id).assets.all
@@ -12,14 +13,15 @@ module AssetsHelper
       return storage
     end
     
-    #not returning false
+
     def shareable?(share_with)
       str = @asset.shared_with.to_s
       a = str.split(",")
-      #can't share file with one self
+      #Ensures that the file isn't being shared to ones self
       if share_with == current_user.id
         return false
       end
+      #Ensures that the file isn't being shared to someone it has already been shared to.
       0.upto(a.length-1) do |x|
         if a[x].to_i == share_with
           return false
