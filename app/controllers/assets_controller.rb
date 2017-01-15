@@ -1,9 +1,13 @@
+#The asset controller is responsible for controlling all the logic behind the assets–our file class.
+#The controller allows one to upload, download, view, and delete their files
+#It also allows one to share their files, and unshare them too
 class AssetsController < ApplicationController
   #Calls the "before_action" method before the following actions
   before_action :logged_in_user, only: [:set_asset, :index, :edit, :get, :show, :new, :create,:update, :destroy, :sharing, :share_index, :share, :unshare, :shared_files]
   before_action :set_asset, only: [:show, :get, :edit, :update, :destroy]
   before_action :admin_user, only: [:update, :edit]
   before_action :has_storage, only: [:create]
+  
   # GET /assets
   # GET /assets.json
   #Shows the index view, which displays all the assets the user owns
@@ -16,29 +20,37 @@ class AssetsController < ApplicationController
   def show
   end
   
+  #NOTE: in the methods related to sharing, you will see a lot of string manipulation (primarily .split() and .join(). .split() converts a string to an array, and .join() an array to a string).
+  #Sharing works by creating an array that is an assets attribute, listing users that may view it, while created an array on the recipients side, that is a user attribute, listing assets that 
+  #the user is a recipient of. Unfortuantely, SQlite3 does not support arrays as a database column type. As a workaround, the "arrays" are converted into strings, and are converted back into 
+  #arrays when their data is needed.
+  
+  #Displays page that takes user input, determining who the user wants to share to
   def sharing 
   end 
+  
   #Displays users that an asset has been shared to
   def share_index
     @asset = Asset.find(params[:id])
     str = @asset.shared_with.to_s
     @shared_to = str.split(",")
   end
+  
+  #Shares a file with another user
   def share
     @asset = Asset.find(params[:id])
+    #Checks to see if the entered in email address is valid
     if(User.find_by(share_params) == nil)
       flash[:danger] = "User doesn't exist"
       redirect_to sharing_asset_path
     else
       other_user_id = User.find_by(share_params).id
-      #remember to catch error
       shared_user = User.find_by(id: other_user_id)
       #For some reason, @asset.update_attribute was not working, but with a local variable, it does
       the_asset = @asset
       
+      #shareable? is a boolean (located in helper module). It checks to see if the given user can be shared to
       if shareable?(other_user_id)
-        asset_update = ""
-        user_update = ""
         
         if @asset.shared_with == nil 
           asset_update = other_user_id.to_s << ","
@@ -51,24 +63,42 @@ class AssetsController < ApplicationController
         else
           user_update = shared_user.shared_files << @asset.id.to_s << ","
         end
-      
+        
+        #Updates the database
         shared_user.update_attribute(:shared_files, user_update)
         the_asset.update_attribute(:shared_with, asset_update)
         redirect_to assets_path
       else
         flash[:danger] = "Could not share with the user"
-        redirect_to assets_path
+        redirect_to sharing_asset_path
       end
     end
   end
   
+  #Allows a user to remove viewing privledges from someone they previously shared to
   def unshare
     the_asset = Asset.find(params[:id])
     shared_user = User.find_by(id: params[:sId].to_i)
+   
+    user_update = shared_user.shared_files.split(",")
+    user_update.delete(params[:id].to_s)
     
-    user_update = shared_user.shared_files.split(",").delete(params[:id])
-    asset_update = the_asset.shared_with.split(",").delete(:sId)
+    asset_update = the_asset.shared_with.split(",")
+    asset_update.delete(params[:sId].to_s)
+     
+    user_update = user_update.join(",")
+    asset_update = asset_update.join(",")
     
+    #Due to a quirk of ruby, str = ",1," , str.split(",") will return ["","1"]. "".to_i will then return 0. This causes other processes related to sharing to freak out,
+    #as no asset will ever exist with the id 0. This block fixes that issue. A similar block is also used in the destroy method.
+    if user_update.length != 0
+      user_update = user_update << ","
+    end
+    if asset_update.length != 0
+      asset_update = asset_update << ","
+    end
+    
+    #Updates database
     shared_user.update_attribute(:shared_files, user_update)
     the_asset.update_attribute(:shared_with, asset_update)
     
@@ -80,8 +110,6 @@ class AssetsController < ApplicationController
   def shared_files
     if current_user.shared_files
       @assets = list_shared_assets
-      puts @assets.empty?
-      puts @assets.length
     end
   end
   #Sends a request to the browser to download an asset
@@ -143,6 +171,22 @@ class AssetsController < ApplicationController
   # DELETE /assets/1.json
   #Deletes the file from the database
   def destroy
+    @asset = Asset.find(params[:id])
+    #Deletes the asset id from its recipients' shared_files column, as it will no longer exist
+    sharedList = @asset.shared_with.split(",")
+    0.upto(sharedList.length-1) do |x|
+      
+      user_update = User.find(sharedList[x].to_i).shared_files.split(",")
+      user_update.delete(@asset.id.to_s)  
+      user_update = user_update.join(",")
+      
+      #See lines 91-92
+      if user_update.length != 0
+        user_update = user_update << ","
+      end
+      
+      User.find(sharedList[x].to_i).update_attribute(:shared_files, user_update)
+    end
     @asset.destroy
     flash[:success] = "Successfully deleted file"
     redirect_to assets_path
@@ -185,18 +229,18 @@ class AssetsController < ApplicationController
       end
     end
     
+    #Returns a list of assets that are shared to the current user
     def list_shared_assets
       str = current_user.shared_files.to_s
       a = str.split(",")
       @assets = []
-      puts "in list_shared_params"
-      puts a.length
-      puts a
+      
       0.upto(a.length-1) do |x|
-        aId = a[x]
-        @assets << Asset.find_by_id(aId)
+        aId = a[x].to_i
+        @assets << Asset.find(aId)
       end
-        @assets
+      
+      @assets  
     end
     
 end
