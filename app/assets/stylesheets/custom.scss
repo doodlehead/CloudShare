@@ -17,7 +17,8 @@ body {
     a {
         color: #555;
         &:hover {
-            color: #555;
+            color: #2589e6;
+            background-color: #FFFFFF;
         }
     }
 }
@@ -69,8 +70,10 @@ footer {
     color: #777;
     a {
         color: #555;
+
         &:hover {
-            color: #222;
+            color: #2589e6;
+            background-color: #FFFFFF;
         }
     }
     small {
