@@ -1,7 +1,13 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <!-- insert logo here -->
+    
     <nav>
+    <ul class="nav navbar-nav navbar-left">
+      <div class="navbar-brand"> 
+        <%= image_tag("CloudShare_logo.png", alt: "CloudShare logo")%> 
+      </div>  
+       <h4 class="navbar-text">CloudShare</h4> 
+    </ul>
       <ul class="nav navbar-nav navbar-right">
         
         <li> <%= link_to "Home", root_path=%> </li>
