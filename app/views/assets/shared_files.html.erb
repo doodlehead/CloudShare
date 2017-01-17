@@ -25,7 +25,9 @@
           <td><%= asset.asset.size/1024%> KB</td>
           <td>
             <!-- Actions of the files -->
-            <%= link_to 'Show', asset %>
+            <% if(current_user.admin?) %>
+              <%= link_to 'Show', asset %>
+            <% end %>
             <%= link_to "Download", asset.asset.url(:original, false) %>
           </td>
         </tr>
