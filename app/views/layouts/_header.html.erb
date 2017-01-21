@@ -2,12 +2,10 @@
   <div class="container">
     
     <nav>
-    <ul class="nav navbar-nav navbar-left">
       <div class="navbar-brand"> 
-        <%= image_tag("CloudShare_logo.png", alt: "CloudShare logo")%> 
+        <%= link_to image_tag("CloudShare_logo.png", alt: "CloudShare logo") , root_path%> 
       </div>  
        <h4 class="navbar-text">CloudShare</h4> 
-    </ul>
       <ul class="nav navbar-nav navbar-right">
         
         <li> <%= link_to "Home", root_path=%> </li>
