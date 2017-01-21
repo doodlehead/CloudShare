@@ -29,8 +29,8 @@ h1{
 p {
     
 }
-h3{
-}
+
+
 @font-face {
     font-family: 'Glyphicons Halflings';
 
@@ -43,16 +43,24 @@ h3{
     padding-right: 40px;
     padding-left: 20px;
     display: inline-block;
-
-}
-
+    }
 
 /*Logo*/
 .navbar-brand {
   margin-top: -7px;
-  margin-right: 10px;
+  margin-right: -20px;
+  margin-left: 0px;
   height: 100%;
   display: inline-block;
+  clear: left;
+  
+     a{
+        &:hover{
+          background-color: transparent;
+          color: #34DDDD;
+          text-decoration: none;
+        }
+      }
 }
 
 
