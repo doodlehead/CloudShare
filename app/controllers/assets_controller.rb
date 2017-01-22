@@ -125,10 +125,6 @@ class AssetsController < ApplicationController
     @asset = current_user.assets.new
   end
 
-  # GET /assets/1/edit
-  def edit
-  end
-
   # POST /assets
   # POST /assets.json
   #Creates and attemps to save an Asset
