@@ -1,11 +1,14 @@
+<!-- Displays the user account details -->
 <h1>Account Details</h1>
 
 <ul class="list-group">
+    <!-- Displays details like email, name and storage -->
     <li class="list-group-item"><strong>Email:</strong> <%=@user.email%></li>
     <li class="list-group-item"><strong>Name:</strong> <%=@user.name%></li>
     <li class="list-group-item"><strong>Storage:</strong> <%= calculate_storage(params[:id])/(1024) %>/5 000 KB</li>
 </ul>
 
+<!-- If the user is an admin allow them to delete the user -->
 <% if(current_user.admin?) %>
      <!-- <a class="btn btn-primary btn-lg" href=# role="button">Delete this account</a> -->
      <%= button_to "Delete this user", user_path(@user), method: :delete %>

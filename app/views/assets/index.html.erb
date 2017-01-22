@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<!-- Displays table-->
 <h1>Files</h1>
 <ul class="list-group">
 <div class="panel panel-default">
@@ -14,6 +14,7 @@
   </thead>
 
   <tbody>
+    <!-- Fill the table body with every asset the user owns-->
     <% @assets.each do |asset| %>
       <tr>
         <td><%= asset.asset.original_filename %></td>
@@ -36,6 +37,6 @@
 </ul>
 <br>
 <ul class="list-group">
-
+<!-- Button for uploading a file -->
 <a class="btn btn-primary btn-lg" href=<%=new_asset_path%> role="button">Upload File</a>
 </ul>

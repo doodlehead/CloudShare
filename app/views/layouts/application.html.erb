@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<!-- Template document used by every view-->
 <html>
   <head>
     <title><%=full_title(yield(:title))%></title>
     <%= csrf_meta_tags %>
-
+    <!-- Link stylesheets -->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -11,17 +12,21 @@
   <body>
     <div id="wrapper">
   		<div id="header">
+  		  <!-- Render the header -->
   		  <%= render 'layouts/header' %>
   		</div>
   		<div id="content">
+  		  <!-- Display flash messages -->
   		  <% flash.each do |message_type, message| %>
           <div class="alert alert-<%= message_type %> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <%= message %>
           </div>
         <% end %>
+        <!-- Yields control to the view -->
         <%= yield %>
   		</div>
+  		<!-- Render the footer -->
   		<div id="footer">
   		  <%= render 'layouts/footer' %>
   		</div>

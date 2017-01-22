@@ -11,10 +11,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
+  #Gets all the users, which is then displayed by the index view
   def index
     @users = User.all
   end
   
+  #Calls the show view, which displays user account information
   def show
      @user = User.find_by(id: params[:id])
   end
@@ -35,17 +37,17 @@ class UsersController < ApplicationController
     end
   end
   
+  #Calls on the edit view to allow a user to edit their account details
   def edit
-    #Relocate the user
     @user = User.find(params[:id])
   end
   
+  #Update user account information
   def update
      @user = User.find(params[:id])
      
      if( @user.update_attributes(user_params))
        flash[:success] = "Sucessfully updated account information"
-       #handle update...
        redirect_to @user
      else
        render "edit"
@@ -55,6 +57,7 @@ class UsersController < ApplicationController
   #Deletes the user
   def destroy
     target = User.find(params[:id])
+    #Admins can not delete other admins
     if(target.admin?)
       flash[:danger] = "Cannot delete admin account"
       redirect_to user_path(target)
@@ -71,7 +74,7 @@ class UsersController < ApplicationController
     end
   end
   
-  #Security measure to stop unched data coming from the web.
+  #Security measure to stop unchecked data coming from the web.
   private
     def user_params
       return params.require(:user).permit(:name, :email, :password, :password_confirmation)

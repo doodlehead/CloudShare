@@ -1,14 +1,16 @@
+#Collection of helper methods related to Sessions
 module SessionsHelper
     def log_in(user)
         #store the user's id in the browser's cache
         session[:user_id] = user.id
     end
     
+    #Get the logged in user
     def current_user
         if(@current_user.nil?)
-            @current_user = User.find_by(id: session[:user_id]) #return
+            @current_user = User.find_by(id: session[:user_id])
         else
-            @current_user #return
+            @current_user
         end
     end
     #Check if user is logged in
@@ -39,14 +41,14 @@ module SessionsHelper
       if(current_user.admin?)
         return true
       end
-      
+      #If a user is trying to view another users page they are redirected to the homepage
       if( !(@user == current_user))
         flash[:danger] = "You don't have permission to access this page"
         redirect_to root_url
       end
     end
     
-    #Check if user is admin
+    #Check if user is admin, if not redirect them to the home page
     def admin_user
       if(!current_user.admin?)
         flash[:danger] = "Access Denied. Admin required"

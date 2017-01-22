@@ -1,13 +1,17 @@
+<!-- This page lits all users in order of creation -->
 <h1>All Users</h1>
+<!-- Display alert -->
 <div class="alert alert-info alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   This is an admin only page!
 </div>
 
 <div class="list-group">
+    <!-- Gets and displays all users -->
     <% @users.each do |user| %>
+        <!-- Add a label if they're admin -->
         <% if(user.admin? )%>
-            <a href= <%= user_path(user) =%> class="list-group-item"> <%= user.name %> &nbsp; <span class="label label-primary">Admin</span> </a>
+            <a href= <%= user_path(user) =%> class="list-group-item"> <%= user.name %> &nbsp; <span class="label label-primary">Admin</span> </a> 
         <% else %>
             <a href= <%= user_path(user) =%> class="list-group-item"> <%= user.name %> </a>
         <% end %>
