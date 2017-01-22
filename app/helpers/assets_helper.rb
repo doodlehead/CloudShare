@@ -1,3 +1,4 @@
+#Collection of helper methods related to Assets
 module AssetsHelper
     def format_filesize
         #to be implemented...
@@ -13,7 +14,7 @@ module AssetsHelper
       return storage
     end
     
-
+    #Checks to see if a file is shareable with the user with the id=share_with
     def shareable?(share_with)
       str = @asset.shared_with.to_s
       a = str.split(",")
@@ -30,6 +31,7 @@ module AssetsHelper
       return true
     end
     
+    #Unused and imcomplete method that sorts all the assets owned by user alphabetically
     def sort_alpha
       @assets = @assets.sort_by { |h| h[:name] }
       #redirect_to user_path
