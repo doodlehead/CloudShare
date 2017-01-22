@@ -1,3 +1,5 @@
+#The User Controller is in charge of the logic behind the users
+#It allows for users to be created, viewed, deleted, updated, edited, and listed
 class UsersController < ApplicationController
   #Calls the "before_action" method before the following actions
   before_action :logged_in_user, only: [:edit, :update, :index, :destroy, :show]
@@ -17,9 +19,12 @@ class UsersController < ApplicationController
      @user = User.find_by(id: params[:id])
   end
 
+  #Creates a user
   def create
     @user = User.new(user_params)
-    #byebug
+    
+    #If the user creation is successful, the user will automatically be saved. Creation is deemed successful
+    #if the inputed parameters are deemed legal by the model validations (done in the User model)
     if(@user.save)
       log_in(@user)
       flash[:success] = "Welcome to CloudShare!"
@@ -47,6 +52,7 @@ class UsersController < ApplicationController
      end
   end
   
+  #Deletes the user
   def destroy
     target = User.find(params[:id])
     if(target.admin?)
@@ -59,13 +65,13 @@ class UsersController < ApplicationController
       @asset.each do |asset|
         asset.destroy
       end
-      
       target.destroy
       flash[:success] = "User deleted"
       redirect_to users_url
     end
   end
   
+  #Security measure to stop unched data coming from the web.
   private
     def user_params
       return params.require(:user).permit(:name, :email, :password, :password_confirmation)
