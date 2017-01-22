@@ -1,6 +1,6 @@
 #The asset controller is responsible for controlling all the logic behind the assets–our file class.
-#The controller allows one to upload, download, view, and delete their files
-#It also allows one to share their files, and unshare them too
+#The controller allows one to upload, download, view, and delete their files, as well as sharing/unsharing them.
+#Much of the methods called here can be found in the AssetsHelper and the SessionsHelper modules.
 class AssetsController < ApplicationController
   #Calls the "before_action" method before the following actions
   before_action :logged_in_user, only: [:set_asset, :index, :edit, :get, :show, :new, :create,:update, :destroy, :sharing, :share_index, :share, :unshare, :shared_files]
@@ -82,11 +82,10 @@ class AssetsController < ApplicationController
    
     user_update = shared_user.shared_files.split(",")
     user_update.delete(params[:id].to_s)
+    user_update = user_update.join(",")
     
     asset_update = the_asset.shared_with.split(",")
     asset_update.delete(params[:sId].to_s)
-     
-    user_update = user_update.join(",")
     asset_update = asset_update.join(",")
     
     #Due to a quirk of ruby, str = ",1," , str.split(",") will return ["","1"]. "".to_i will then return 0. This causes other processes related to sharing to freak out,
@@ -106,7 +105,7 @@ class AssetsController < ApplicationController
     redirect_to share_index_asset_path
   end
   
-  #Later, make shared_files check to see if the asset lists the user, for added security
+  #Shows the files that are shared to the user.
   def shared_files
     if current_user.shared_files
       @assets = list_shared_assets
@@ -123,10 +122,6 @@ class AssetsController < ApplicationController
   # GET /assets/new
   def new
     @asset = current_user.assets.new
-  end
-
-  # GET /assets/1/edit
-  def edit
   end
 
   # POST /assets
@@ -211,7 +206,7 @@ class AssetsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the s.cary internet, only allow the white list through.
+    # Never trust parameters from the scary internet, only allow the white list through.
     def asset_params
       #byebug
       params.require(:asset).permit(:user_id, :asset)
