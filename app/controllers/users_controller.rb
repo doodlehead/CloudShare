@@ -1,7 +1,8 @@
 #The User Controller is in charge of the logic behind the users
 #It allows for users to be created, viewed, deleted, updated, edited, and listed
 class UsersController < ApplicationController
-  #Calls the "before_action" method before the following actions
+  #Calls the "before_action" method before the following actions. Actions only take place if the 
+  #methods return true.
   before_action :logged_in_user, only: [:edit, :update, :index, :destroy, :show]
   before_action :correct_user,   only: [:edit, :update, :show]
   before_action :admin_user,     only: :destroy

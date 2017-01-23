@@ -1,3 +1,4 @@
+#Houses helper methods for the asset controller.
 module AssetsHelper
     def format_filesize
         #to be implemented...
