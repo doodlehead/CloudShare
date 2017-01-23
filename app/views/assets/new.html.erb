@@ -1,6 +1,6 @@
 <h1>Upload New File</h1>
 
-<!-- Should be in partial? -->
+<!-- Print out errors if there are any -->
 <% if( @asset.errors.any?) %>
  <div id="error_explanation">
       <div class="alert alert-danger">
@@ -12,8 +12,7 @@
     </div>
 <% end %>
 
-
-<% if(true) %>
+<!-- Form for uploading a file -->
   <div class="row">
       <div class = "col-md-6 col-md-offset-3">
         <%= form_for(@asset, multipart: true) do |f| %>
@@ -27,7 +26,6 @@
         <% end %>
       </div>
   </div>
-<% end %>
 
-
+<!-- Back button that leads to the Asset index-->
 <%= link_to 'Back', assets_path %>

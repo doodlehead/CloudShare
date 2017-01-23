@@ -1,31 +1,37 @@
+<!-- Code for the header, located at the top of the page -->
+<!-- Create a Navbar -->
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     
     <nav>
       <div class="navbar-brand"> 
+        <!-- Put our logo in the navbar -->
         <%= link_to image_tag("CloudShare_logo.png", alt: "CloudShare logo") , root_path%> 
       </div>  
        <h4 class="navbar-text">CloudShare</h4> 
       <ul class="nav navbar-nav navbar-right">
-        
+        <!-- Make links on the navbar -->
         <li> <%= link_to "Home", root_path=%> </li>
         <li><%= link_to "My Files", assets_path=%></li>
         <li><%= link_to "Shared Files", shared_files_assets_path=%></li>
         
+        <!-- Add an additional dropdown menu if the user is logged in -->
         <% if logged_in? %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <!-- If user is admin, display link to the user index page -->
               <% if(current_user.admin?) %>
                 <li><%= link_to "Users", users_path %></li>
               <% end %>
               <li><%= link_to "Profile", current_user %></li>
               <li><%= link_to "Settings", edit_user_path(current_user) %></li>
               <li role="separator" class="divider"></li>
-              <li><%= link_to "Log out", logout_path, method: :delete %></li> <!-- what is method: :delete? -->
+              <li><%= link_to "Log out", logout_path, method: :delete %></li>
             </ul>
           </li>
         <% else %>
+        <!-- Provide login button if user is not logged in -->
           <li><%= link_to "Login", login_path=%></li>
         <% end %>
       </ul>
