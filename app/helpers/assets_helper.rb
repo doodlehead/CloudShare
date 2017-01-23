@@ -1,4 +1,5 @@
 #Collection of helper methods related to Assets
+
 module AssetsHelper
     def format_filesize
         #to be implemented...

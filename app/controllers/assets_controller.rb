@@ -2,7 +2,8 @@
 #The controller allows one to upload, download, view, and delete their files, as well as sharing/unsharing them.
 #Much of the methods called here can be found in the AssetsHelper and the SessionsHelper modules.
 class AssetsController < ApplicationController
-  #Calls the "before_action" method before the following actions
+  #Calls the "before_action" method before the following actions. If the methods return true the following
+  #actions will take place
   before_action :logged_in_user, only: [:set_asset, :index, :edit, :get, :show, :new, :create,:update, :destroy, :sharing, :share_index, :share, :unshare, :shared_files]
   before_action :set_asset, only: [:show, :get, :edit, :update, :destroy]
   before_action :admin_user, only: [:update, :edit]
@@ -212,10 +213,12 @@ class AssetsController < ApplicationController
       params.require(:asset).permit(:user_id, :asset)
     end
     
+    # Allows only a white list of parameters through, for security reasons.
     def share_params
       params.require(:asset).permit(:email)
     end
     
+    # Checks to see if the user has adequate storage for their upload.
     def has_storage
       #10 MB
       if(calculate_storage(current_user) > (1024*1024*5))
@@ -224,7 +227,7 @@ class AssetsController < ApplicationController
       end
     end
     
-    #Returns a list of assets that are shared to the current user
+    # Returns a list of assets that are shared to the current user
     def list_shared_assets
       str = current_user.shared_files.to_s
       a = str.split(",")

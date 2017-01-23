@@ -1,4 +1,6 @@
+
 #Collection of helper methods related to Sessions
+
 module SessionsHelper
     def log_in(user)
         #store the user's id in the browser's cache

@@ -1,5 +1,9 @@
 class User < ApplicationRecord
+    #This is an active record association. It forms relationships between models, useful for allowing "rails magic" to automatically make operations between the two simpler.
+    #Here, we've made it so one asset belongs to a user.
+    #For more info, visit http://guides.rubyonrails.org/association_basics.html
     has_many :assets
+    
     #Force all emails to be lowercase
     before_save { self.email = email.downcase }
     
@@ -9,7 +13,7 @@ class User < ApplicationRecord
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
     validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, length: { maximum: 255 }, uniqueness: { case_sensitive: false }
     
-    #Adds password functinality(BCrypt gem)
+    #Adds hashed and salted password functinality(BCrypt gem)
     has_secure_password
     #Does a bunch of stuff behind the scenes, refer to: http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
     validates :password, length: { minimum: 6}, presence: true
