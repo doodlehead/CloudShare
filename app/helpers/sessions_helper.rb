@@ -1,3 +1,4 @@
+#Houses helper methods realted to the sessions (but is used in the asset controller too)
 module SessionsHelper
     def log_in(user)
         #store the user's id in the browser's cache
