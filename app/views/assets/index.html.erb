@@ -20,9 +20,6 @@
         <td><%= asset.asset.size/1024%> KB</td>
         <td><%= asset.created_at %></td>
         <td>
-          <% if(current_user.admin?) %>
-            <%= link_to 'Edit', edit_asset_path(asset) %>
-          <% end %>
           <%= link_to 'Delete', asset, method: :delete, data: { confirm: 'Are you sure?' } %>
           <%= link_to "Download", asset.asset.url(:original, false) %>
           <%= link_to 'Share', sharing_asset_path(asset) %>

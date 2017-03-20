@@ -3,9 +3,9 @@
 #Much of the methods called here can be found in the AssetsHelper and the SessionsHelper modules.
 class AssetsController < ApplicationController
   #Calls the "before_action" method before the following actions
-  before_action :logged_in_user, only: [:set_asset, :index, :edit, :get, :show, :new, :create,:update, :destroy, :sharing, :share_index, :share, :unshare, :shared_files]
+  before_action :logged_in_user, only: [:set_asset, :index, :get, :show, :new, :create,:update, :destroy, :sharing, :share_index, :share, :unshare, :shared_files]
   before_action :set_asset, only: [:show, :get, :edit, :update, :destroy]
-  before_action :admin_user, only: [:update, :edit]
+  before_action :admin_user, only: [:update]
   before_action :has_storage, only: [:create]
   
   # GET /assets
@@ -156,7 +156,7 @@ class AssetsController < ApplicationController
         format.html { redirect_to @asset, notice: 'Asset was successfully updated.' }
         format.json { render :show, status: :ok, location: @asset }
       else
-        format.html { render :edit }
+        #format.html { render :edit }
         format.json { render json: @asset.errors, status: :unprocessable_entity }
       end
     end
