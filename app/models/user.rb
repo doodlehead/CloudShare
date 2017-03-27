@@ -14,10 +14,10 @@ class User < ApplicationRecord
     #Does a bunch of stuff behind the scenes, refer to: http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
     validates :password, length: { minimum: 6}, presence: true
     
-    #Password digest method
-    def User.digest(string)
-        cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-        BCrypt::Password.create(string, cost: cost)
-    end
+    #Password digest method for fixtures
+    #def User.digest(string)
+    #    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+    #                                             BCrypt::Engine.cost
+    #    BCrypt::Password.create(string, cost: cost)
+    #end
 end
