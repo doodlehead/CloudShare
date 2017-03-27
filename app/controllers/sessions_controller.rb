@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   
   def create
     #Try to find the user in the database
-    user = User.find_by(email: params[:session][:email].downcase) #Why is there a sessions hash?...
+    user = User.find_by(email: params[:session][:email].downcase) 
     if user && user.authenticate(params[:session][:password])
       log_in(user) #store id in cache
       redirect_to user_url(user)

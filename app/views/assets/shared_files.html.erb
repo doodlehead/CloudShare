@@ -1,4 +1,4 @@
-<!-- This is the view that renders all the files that have been shared to an user -->
+<!-- This is the view that renders all the files that have been shared to a user -->
 <h1> Shared Files </h1>
 <% if @assets == nil %>
   <p> You have no shared files </p> 
@@ -25,9 +25,6 @@
           <td><%= asset.asset.size/1024%> KB</td>
           <td>
             <!-- Actions of the files -->
-            <% if(current_user.admin?) %>
-              <%= link_to 'Show', asset %>
-            <% end %>
             <%= link_to "Download", asset.asset.url(:original, false) %>
           </td>
         </tr>
