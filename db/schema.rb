@@ -10,36 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170108001037) do
+ActiveRecord::Schema.define(version: 20170330142720) do
 
   create_table "assets", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.string   "uploaded_file_file_name"
-    t.string   "uploaded_file_content_type"
-    t.integer  "uploaded_file_file_size"
-    t.datetime "uploaded_file_updated_at"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "asset_file_name"
     t.string   "asset_content_type"
     t.integer  "asset_file_size"
     t.datetime "asset_updated_at"
-    t.string   "shared_with",                default: ""
+    t.string   "shared_with",        default: ""
+    t.boolean  "tempfile",           default: false
     t.index ["user_id"], name: "index_assets_on_user_id"
+  end
+
+  create_table "keys", force: :cascade do |t|
+    t.integer  "owner_id"
+    t.integer  "asset_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.binary   "ekey"
+    t.binary   "iv"
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "password_digest"
-    t.boolean  "admin",              default: false
-    t.string   "asset_file_name"
-    t.string   "asset_content_type"
-    t.integer  "asset_file_size"
-    t.datetime "asset_updated_at"
-    t.string   "shared_files",       default: ""
+    t.boolean  "admin",           default: false
+    t.string   "shared_files",    default: ""
+    t.binary   "public_key"
+    t.binary   "eprivate_key"
   end
 
 end

@@ -28,7 +28,7 @@
             <% if(current_user.admin?) %>
               <%= link_to 'Show', asset %>
             <% end %>
-            <%= link_to "Download", asset.asset.url(:original, false) %>
+            <%= link_to "Download", enter_password_shared_asset_path(asset) %>
           </td>
         </tr>
       <% end %>

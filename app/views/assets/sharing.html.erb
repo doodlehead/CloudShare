@@ -4,7 +4,9 @@
     <div class = "col-md-6 col-md-offset-3">
         <%= form_for :asset, :url => share_asset_path do |f| %>            
             <%= f.label :Email %>
-            <%= f.text_field :email, class: 'form-control' %>    
+            <%= f.text_field :email, class: 'form-control' %>  
+            <%= f.label :Password %>
+            <%= f.password_field :password %>  
             <%= f.submit "Share", class: "btn btn-primary" %>
         <% end %>
     </div>

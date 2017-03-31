@@ -25,7 +25,7 @@
             <%= link_to 'Edit', edit_asset_path(asset) %>
           <% end %>
           <%= link_to 'Delete', asset, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%= link_to "Download", asset.asset.url(:original, false) %>
+          <%= link_to "Download", enter_password_asset_path(asset)%>
           <%= link_to 'Share', sharing_asset_path(asset) %>
           <%= link_to 'Shared With', share_index_asset_path(asset) %>
         </td>

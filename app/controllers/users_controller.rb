@@ -1,3 +1,4 @@
+require 'openssl'
 #The User Controller is in charge of the logic behind the users
 #It allows for users to be created, viewed, deleted, updated, edited, and listed
 class UsersController < ApplicationController
@@ -78,9 +79,17 @@ class UsersController < ApplicationController
   #Security measure to stop unchecked data coming from the web.
   private
     def user_params
-      return params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      other_param = params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      keypair_param = {}
+      
+      if other_param[:password] != nil
+        if other_param[:password].length >= 4
+          keypair_param = create_keypair(other_param[:password])
+        end
+      end
       #require() marks what params are required
       #permit() limits which parameters can be passed in
+      return keypair_param.merge(other_param)
     end
     
 end

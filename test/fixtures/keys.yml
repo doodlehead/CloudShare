@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kFile: 
+  owner_id: 1
+  iv: 
+  asset_id: 1
+
+two:
+  kFile: 
+  owner_id: 1
+  iv: 
+  asset_id: 1

@@ -6,6 +6,9 @@ class Asset < ApplicationRecord
     #For more info, visit http://guides.rubyonrails.org/association_basics.html
     belongs_to :user
     
+    #Used in file encryption
+    attr_accessor :password 
+       
     #The last block of code here is from paperclip, a file handling gem (API)
     #has_attached_file links a file to an asset object
     has_attached_file :asset,
